@@ -1,56 +1,14 @@
-const productModel = require("../models/product.model");
+const express = require("express");
+const {
+  createProduct,
+  getAllProducts,
+  getOneProduct,
+} = require("../controllers/product.controller");
 
-// create Product
-exports.createProduct = async (req, res) => {
-  try {
-    const data = req.body;
-    const productData = new productModel(data);
-    await productData.save();
-    res.status(201).json({
-      status: "success",
-      message: "Data inserted successfully",
-      data: productData,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "fail",
-      message: "Data not inserted",
-      error: error.message,
-    });
-  }
-};
+const router = express.Router();
 
-// Get all Products
-exports.getAllProducts = async (req, res) => {
-  try {
-    const productData = await productModel.find();
-    res.status(200).json({
-      status: "success",
-      data: productData,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "fail",
-      message: "Can't get the data",
-      error: error.message,
-    });
-  }
-};
+router.post("/product", createProduct);
+router.get("/product", getAllProducts);
+router.get("/product/:id", getOneProduct);
 
-// Get One Product
-exports.getOneProduct = async (req, res) => {
-  try {
-    const productId = req.params.id;
-    const productData = await productModel.findById(productId);
-    res.status(200).json({
-      status: "success",
-      data: productData,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "fail",
-      message: "Can't get the data",
-      error: error.message,
-    });
-  }
-};
+module.exports = router;
