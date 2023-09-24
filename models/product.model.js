@@ -34,13 +34,7 @@ const productSchema = new mongoose.Schema(
     },
     reviews: [
       {
-        reviewerName: {
-          type: String,
-        },
-        reviewerEmail: {
-          type: String,
-        },
-        reviewerImgUrl: {
+        username: {
           type: String,
         },
         comments: {
